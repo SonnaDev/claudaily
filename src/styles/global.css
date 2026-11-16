@@ -1,0 +1,190 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer base {
+  html {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #1F1E1D;
+    background-color: #FAF9F5;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html.dark {
+    color: #EDEBE6;
+    background-color: #1A1918;
+  }
+
+  ::selection {
+    background-color: #B84A33;
+    color: #FFFFFF;
+  }
+
+  html.dark ::selection {
+    background-color: #E07A5F;
+    color: #1A1918;
+  }
+}
+
+/* Typography styles for long-form content */
+.prose {
+  color: inherit;
+  max-width: 68ch;
+  font-size: 1.125rem;
+  line-height: 1.75;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #1F1E1D;
+  margin-top: 2rem;
+  margin-bottom: 0.85rem;
+}
+
+html.dark .prose h1,
+html.dark .prose h2,
+html.dark .prose h3,
+html.dark .prose h4 {
+  color: #EDEBE6;
+}
+
+.prose h2 {
+  font-size: 1.75rem;
+  border-bottom: 1px solid #E2DDD5;
+  padding-bottom: 0.5rem;
+}
+
+html.dark .prose h2 {
+  border-color: #35322F;
+}
+
+.prose h3 {
+  font-size: 1.35rem;
+}
+
+.prose p {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose a {
+  color: #B84A33;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  font-weight: 500;
+  transition: opacity 0.15s ease;
+}
+
+html.dark .prose a {
+  color: #E07A5F;
+}
+
+.prose a:hover {
+  opacity: 0.85;
+}
+
+.prose ul, .prose ol {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  padding-left: 1.75rem;
+}
+
+.prose ul {
+  list-style-type: disc;
+}
+
+.prose ol {
+  list-style-type: decimal;
+}
+
+.prose li {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose blockquote {
+  border-left: 4px solid #B84A33;
+  padding-left: 1rem;
+  font-style: italic;
+  margin: 1.5rem 0;
+  color: #5F5C56;
+}
+
+html.dark .prose blockquote {
+  border-color: #E07A5F;
+  color: #A8A49C;
+}
+
+.prose code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9em;
+  background-color: #F2EFEB;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  color: #1F1E1D;
+}
+
+html.dark .prose code {
+  background-color: #242220;
+  color: #EDEBE6;
+}
+
+.prose pre {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.925rem;
+  line-height: 1.6;
+  border: 1px solid #35322F;
+}
+
+.prose pre code {
+  background-color: transparent !important;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid #E2DDD5;
+  margin: 2.5rem 0;
+}
+
+html.dark .prose hr {
+  border-top-color: #35322F;
+}
+
+/* Code block wrapper with copy button */
+.code-block-wrapper {
+  position: relative;
+}
+
+.copy-code-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.75rem;
+  font-family: 'Inter', sans-serif;
+  color: #A8A49C;
+  background-color: rgba(36, 34, 32, 0.85);
+  border: 1px solid #35322F;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.copy-code-btn:hover {
+  color: #EDEBE6;
+  background-color: #35322F;
+}

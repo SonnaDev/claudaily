@@ -1,0 +1,51 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+export const getStaticPaths = (async () => {
+  const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+  const tagsSet = new Set<string>();
+
+  allPosts.forEach((post) => {
+    post.data.tags?.forEach((tag) => tagsSet.add(tag.toLowerCase()));
+  });
+
+  return Array.from(tagsSet).map((tag) => {
+    const filtered = allPosts
+      .filter((post) => post.data.tags?.some((t) => t.toLowerCase() === tag))
+      .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+    return {
+      params: { tag },
+      props: { posts: filtered, tag },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { posts, tag } = Astro.props;
+---
+
+<BaseLayout
+  title={`Posts tagged #${tag}`}
+  description={`Browse all Claudaily articles and tutorials tagged with #${tag}.`}
+>
+  <div class="mb-10 pb-6 border-b border-border-light dark:border-border-dark">
+    <div class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold uppercase tracking-wider bg-accent/10 text-accent dark:text-accent-dark mb-3">
+      Topic Tag
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-serif font-black text-fg-light dark:text-fg-dark">
+      #{tag}
+    </h1>
+    <p class="mt-2 text-fg-mutedLight dark:text-fg-mutedDark text-base sm:text-lg">
+      Found {posts.length} {posts.length === 1 ? 'article' : 'articles'} filed under this tag.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {posts.map((post) => (
+      <PostCard post={post} />
+    ))}
+  </div>
+</BaseLayout>

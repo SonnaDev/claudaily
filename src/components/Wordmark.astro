@@ -1,0 +1,19 @@
+---
+interface Props {
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+}
+
+const { size = 'md' } = Astro.props;
+
+const sizeClasses = {
+  sm: 'text-lg',
+  md: 'text-2xl',
+  lg: 'text-3xl',
+  xl: 'text-4xl md:text-5xl',
+};
+---
+
+<a href="/" class={`inline-flex items-center font-serif font-black tracking-tight select-none group ${sizeClasses[size]}`}>
+  <span class="text-[#1F1E1D] dark:text-[#EDEBE6] transition-colors">Clau</span>
+  <span class="text-[#C8553D] dark:text-[#E07A5F] transition-colors">daily</span>
+</a>

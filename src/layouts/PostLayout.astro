@@ -1,0 +1,192 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import PostCard from '../components/PostCard.astro';
+import NewsletterForm from '../components/NewsletterForm.astro';
+import { formatDate, calculateReadingTime } from '../utils/content';
+
+interface Props {
+  post: {
+    id: string;
+    body: string;
+    data: {
+      title: string;
+      description: string;
+      date: Date;
+      updated?: Date;
+      category: 'news' | 'tutorial';
+      tags?: string[];
+      difficulty?: 'Beginner' | 'Intermediate' | 'Advanced';
+      estimatedTime?: string;
+      prerequisites?: string[];
+      sources?: { title: string; url: string }[];
+    };
+  };
+  headings: { depth: number; slug: string; text: string }[];
+  relatedPosts: any[];
+}
+
+const { post, headings, relatedPosts } = Astro.props;
+const { title, description, date, updated, category, tags = [], difficulty, estimatedTime, prerequisites, sources } = post.data;
+
+const readingTime = calculateReadingTime(post.body || '');
+
+const difficultyBadgeColors = {
+  Beginner: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 border-emerald-300/40',
+  Intermediate: 'bg-amber-100 text-amber-800 dark:bg-amber-950/80 dark:text-amber-300 border-amber-300/40',
+  Advanced: 'bg-rose-100 text-rose-800 dark:bg-rose-950/80 dark:text-rose-300 border-rose-300/40',
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  type="article"
+  articleDate={date.toISOString()}
+  articleUpdated={updated ? updated.toISOString() : undefined}
+>
+  <article class="max-w-3xl mx-auto" data-pagefind-body>
+    <!-- Post Header -->
+    <header class="mb-10 pb-8 border-b border-border-light dark:border-border-dark">
+      <!-- Category Badge & Difficulty -->
+      <div class="flex items-center flex-wrap gap-2 text-xs mb-4">
+        <a
+          href={`/${category === 'news' ? 'news' : 'tutorials'}`}
+          class="inline-flex items-center px-2.5 py-0.5 rounded font-bold uppercase tracking-wider text-[11px] bg-accent/10 text-accent dark:text-accent-dark hover:opacity-80 transition-opacity"
+        >
+          {category}
+        </a>
+
+        {difficulty && (
+          <span class={`inline-flex items-center px-2.5 py-0.5 rounded text-[11px] font-semibold border ${difficultyBadgeColors[difficulty]}`}>
+            {difficulty}
+          </span>
+        )}
+
+        {estimatedTime && (
+          <span class="text-xs text-fg-mutedLight dark:text-fg-mutedDark font-medium">
+            ⏱ {estimatedTime}
+          </span>
+        )}
+
+        <span class="text-xs text-fg-mutedLight dark:text-fg-mutedDark font-medium">
+          📖 {readingTime}
+        </span>
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-serif font-black tracking-tight text-fg-light dark:text-fg-dark leading-tight">
+        {title}
+      </h1>
+
+      <!-- Subtitle / Description -->
+      <p class="mt-4 text-lg text-fg-mutedLight dark:text-fg-mutedDark leading-relaxed">
+        {description}
+      </p>
+
+      <!-- Author / Meta / Dates -->
+      <div class="mt-6 flex flex-wrap items-center gap-4 text-xs sm:text-sm text-fg-mutedLight dark:text-fg-mutedDark">
+        <div class="flex items-center gap-2">
+          <span class="font-medium text-fg-light dark:text-fg-dark">Claudaily Staff</span>
+        </div>
+        <span>•</span>
+        <time datetime={date.toISOString()}>Published: {formatDate(date)}</time>
+        {updated && (
+          <>
+            <span>•</span>
+            <time datetime={updated.toISOString()} class="text-accent dark:text-accent-dark font-medium">
+              Updated: {formatDate(updated)}
+            </time>
+          </>
+        )}
+      </div>
+
+      <!-- Tags -->
+      {tags.length > 0 && (
+        <div class="mt-4 flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <a
+              href={`/tags/${tag.toLowerCase()}`}
+              class="text-xs px-2.5 py-1 rounded-md bg-surface-light dark:bg-surface-dark text-fg-mutedLight dark:text-fg-mutedDark hover:text-accent hover:border-accent border border-border-light dark:border-border-dark transition-colors"
+            >
+              #{tag}
+            </a>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <!-- Tutorial Prerequisites Box -->
+    {category === 'tutorial' && prerequisites && prerequisites.length > 0 && (
+      <aside class="mb-8 p-5 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark">
+        <h2 class="text-sm font-semibold tracking-wider uppercase text-fg-light dark:text-fg-dark flex items-center gap-2 mb-2">
+          <svg class="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Prerequisites
+        </h2>
+        <ul class="list-disc list-inside space-y-1 text-sm text-fg-mutedLight dark:text-fg-mutedDark">
+          {prerequisites.map((req) => (
+            <li>{req}</li>
+          ))}
+        </ul>
+      </aside>
+    )}
+
+    <!-- Table of Contents -->
+    <TableOfContents headings={headings} />
+
+    <!-- Main Content -->
+    <div class="prose dark:prose-invert max-w-none">
+      <slot />
+    </div>
+
+    <!-- Official Sources (News posts) -->
+    {category === 'news' && sources && sources.length > 0 && (
+      <section class="mt-12 pt-6 border-t border-border-light dark:border-border-dark">
+        <h2 class="text-xs font-semibold tracking-wider uppercase text-fg-light dark:text-fg-dark mb-3 flex items-center gap-2">
+          <svg class="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+          </svg>
+          Official Sources & Reference Links
+        </h2>
+        <ul class="space-y-2 text-sm">
+          {sources.map((source) => (
+            <li>
+              <a
+                href={source.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-accent hover:underline inline-flex items-center gap-1.5"
+              >
+                {source.title}
+                <svg class="w-3.5 h-3.5 inline opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    <!-- Newsletter CTA -->
+    <div class="mt-16">
+      <NewsletterForm />
+    </div>
+
+    <!-- Related Posts -->
+    {relatedPosts.length > 0 && (
+      <section class="mt-16 pt-10 border-t border-border-light dark:border-border-dark">
+        <h2 class="text-2xl font-serif font-bold text-fg-light dark:text-fg-dark mb-6">
+          Related Articles
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {relatedPosts.map((related) => (
+            <PostCard post={related} />
+          ))}
+        </div>
+      </section>
+    )}
+  </article>
+</BaseLayout>

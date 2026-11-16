@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import Pagination from '../../components/Pagination.astro';
+import { getCollection } from 'astro:content';
+
+const POSTS_PER_PAGE = 6;
+const allNews = await getCollection('blog', ({ data }) => !data.draft && data.category === 'news');
+const sortedNews = allNews.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const totalPages = Math.ceil(sortedNews.length / POSTS_PER_PAGE) || 1;
+const paginatedNews = sortedNews.slice(0, POSTS_PER_PAGE);
+---
+
+<BaseLayout
+  title="News & Product Updates"
+  description="All the latest updates, model announcements, benchmarks, and feature releases across the Claude and Anthropic ecosystem."
+>
+  <div class="mb-10 pb-6 border-b border-border-light dark:border-border-dark">
+    <div class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold uppercase tracking-wider bg-accent/10 text-accent dark:text-accent-dark mb-3">
+      Category
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-serif font-black text-fg-light dark:text-fg-dark">
+      Claude News & Updates
+    </h1>
+    <p class="mt-2 text-fg-mutedLight dark:text-fg-mutedDark text-base sm:text-lg">
+      Timely coverage of Anthropic announcements, foundation model benchmarks, and API feature releases.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {paginatedNews.map((post) => (
+      <PostCard post={post} />
+    ))}
+  </div>
+
+  <Pagination currentPage={1} totalPages={totalPages} baseUrl="/news" />
+</BaseLayout>

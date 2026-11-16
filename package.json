@@ -1,0 +1,30 @@
+{
+  "name": "claudaily",
+  "version": "1.0.0",
+  "description": "An independent English-language blog dedicated exclusively to Claude (Anthropic's AI assistant).",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build && pagefind --site dist",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "keywords": ["claude", "anthropic", "ai", "blog", "tutorials"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@astrojs/mdx": "^4.3.14",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.5",
+    "@astrojs/tailwind": "^6.0.2",
+    "@fontsource/fraunces": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "astro": "^5.18.2",
+    "mdast-util-to-string": "^4.0.0",
+    "pagefind": "^1.6.0",
+    "reading-time": "^1.5.0",
+    "tailwindcss": "^3.4.19"
+  }
+}

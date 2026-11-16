@@ -1,0 +1,38 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+
+export const getStaticPaths = (async () => {
+  const newsPosts = await getCollection('blog', ({ data }) => !data.draft && data.category === 'news');
+  const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+
+  return newsPosts.map((post) => {
+    // Determine related posts (share category or common tags, excluding self)
+    const related = allPosts
+      .filter((p) => p.id !== post.id)
+      .map((p) => {
+        let score = 0;
+        if (p.data.category === post.data.category) score += 2;
+        const sharedTags = p.data.tags.filter((t) => post.data.tags.includes(t));
+        score += sharedTags.length * 3;
+        return { post: p, score };
+      })
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 2)
+      .map((item) => item.post);
+
+    return {
+      params: { slug: post.id },
+      props: { post, relatedPosts: related },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { post, relatedPosts } = Astro.props;
+const { Content, headings } = await render(post);
+---
+
+<PostLayout post={post} headings={headings} relatedPosts={relatedPosts}>
+  <Content />
+</PostLayout>

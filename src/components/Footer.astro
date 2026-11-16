@@ -1,0 +1,43 @@
+---
+import Wordmark from './Wordmark.astro';
+---
+
+<footer class="w-full border-t border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark py-12 mt-20 transition-colors">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <div>
+        <Wordmark size="sm" />
+        <p class="mt-3 text-sm text-fg-mutedLight dark:text-fg-mutedDark max-w-sm leading-relaxed">
+          The independent guide and chronicle for Claude, Anthropic's AI assistant. Practical tutorials, prompt engineering, and product updates.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xs font-semibold tracking-wider uppercase text-fg-light dark:text-fg-dark mb-3">Navigation</h2>
+        <ul class="space-y-2 text-sm">
+          <li><a href="/news" class="text-fg-mutedLight dark:text-fg-mutedDark hover:text-accent transition-colors">News & Updates</a></li>
+          <li><a href="/tutorials" class="text-fg-mutedLight dark:text-fg-mutedDark hover:text-accent transition-colors">Tutorials & Guides</a></li>
+          <li><a href="/about" class="text-fg-mutedLight dark:text-fg-mutedDark hover:text-accent transition-colors">About & Editorial</a></li>
+          <li><a href="/search" class="text-fg-mutedLight dark:text-fg-mutedDark hover:text-accent transition-colors">Search Claudaily</a></li>
+          <li><a href="/rss.xml" class="text-fg-mutedLight dark:text-fg-mutedDark hover:text-accent transition-colors">RSS Feed</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-xs font-semibold tracking-wider uppercase text-fg-light dark:text-fg-dark mb-3">Notice</h2>
+        <div class="p-3.5 rounded-lg bg-bg-light dark:bg-bg-dark border border-border-light dark:border-border-dark text-xs text-fg-mutedLight dark:text-fg-mutedDark leading-relaxed">
+          <span class="font-semibold text-fg-light dark:text-fg-dark">Independent Blog:</span> Claudaily is an independent publication and is not affiliated with, endorsed by, or sponsored by Anthropic, PBC. "Claude" is a trademark of Anthropic.
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-8 border-t border-border-light dark:border-border-dark flex flex-col sm:flex-row items-center justify-between text-xs text-fg-mutedLight dark:text-fg-mutedDark gap-4">
+      <p>© {new Date().getFullYear()} Claudaily. Built with Astro & Tailwind CSS.</p>
+      <div class="flex items-center gap-4">
+        <a href="/sitemap-index.xml" class="hover:text-accent transition-colors">Sitemap</a>
+        <span>•</span>
+        <a href="/rss.xml" class="hover:text-accent transition-colors">RSS Feed</a>
+      </div>
+    </div>
+  </div>
+</footer>

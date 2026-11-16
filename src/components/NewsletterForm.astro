@@ -1,0 +1,47 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Stay ahead with Claude",
+  description = "Get our weekly breakdown of new Claude capabilities, prompt engineering techniques, and API tutorials directly to your inbox. No spam, ever.",
+} = Astro.props;
+---
+
+<div class="rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-6 sm:p-8 relative overflow-hidden transition-colors">
+  <div class="max-w-xl">
+    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-accent/10 text-accent dark:text-accent-dark mb-3">
+      Claudaily Dispatch
+    </span>
+    <h3 class="text-xl sm:text-2xl font-serif font-bold text-fg-light dark:text-fg-dark">
+      {title}
+    </h3>
+    <p class="mt-2 text-sm text-fg-mutedLight dark:text-fg-mutedDark leading-relaxed">
+      {description}
+    </p>
+
+    <!-- Placeholder newsletter form -->
+    <form id="newsletter-form" class="mt-5 flex flex-col sm:flex-row gap-2.5" onsubmit="event.preventDefault(); document.getElementById('newsletter-msg').classList.remove('hidden');">
+      <label for="newsletter-email" class="sr-only">Email address</label>
+      <input
+        type="email"
+        id="newsletter-email"
+        required
+        placeholder="you@domain.com"
+        class="flex-1 px-4 py-2.5 text-sm rounded-lg border border-border-light dark:border-border-dark bg-bg-light dark:bg-bg-dark text-fg-light dark:text-fg-dark placeholder:text-fg-mutedLight/60 dark:placeholder:text-fg-mutedDark/60 focus:outline-none focus:ring-2 focus:ring-accent"
+      />
+      <button
+        type="submit"
+        class="px-5 py-2.5 text-sm font-medium rounded-lg bg-accent text-white hover:opacity-95 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
+      >
+        Subscribe
+      </button>
+    </form>
+
+    <p id="newsletter-msg" class="hidden mt-3 text-xs text-green-700 dark:text-green-400 font-medium">
+      ✓ Thank you! You're now on the early notification list. (Form placeholder)
+    </p>
+  </div>
+</div>

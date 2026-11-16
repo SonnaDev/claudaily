@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Search Claudaily"
+  description="Search all news articles and practical tutorials across Claudaily."
+>
+  <div class="max-w-2xl mx-auto py-6">
+    <div class="mb-8">
+      <h1 class="text-3xl font-serif font-black text-fg-light dark:text-fg-dark">
+        Search Claudaily
+      </h1>
+      <p class="mt-2 text-fg-mutedLight dark:text-fg-mutedDark text-sm">
+        Search through all articles, tutorials, code snippets, and release announcements.
+      </p>
+    </div>
+
+    <!-- Pagefind search container -->
+    <div id="search" class="min-h-[300px]"></div>
+  </div>
+
+  <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+  <script src="/pagefind/pagefind-ui.js" is:inline></script>
+  <script is:inline>
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof PagefindUI !== 'undefined') {
+        new PagefindUI({
+          element: '#search',
+          showImages: false,
+          showSubResults: true,
+          autofocus: true,
+        });
+      } else {
+        const searchDiv = document.getElementById('search');
+        if (searchDiv) {
+          searchDiv.innerHTML = `
+            <div class="p-6 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark text-center">
+              <p class="text-sm text-fg-mutedLight dark:text-fg-mutedDark">
+                Pagefind index will be compiled during production build. (Run <code>npm run build</code> to generate the client-side search index).
+              </p>
+            </div>
+          `;
+        }
+      }
+    });
+  </script>
+</BaseLayout>

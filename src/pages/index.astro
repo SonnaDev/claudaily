@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
+import Wordmark from '../components/Wordmark.astro';
+import NewsletterForm from '../components/NewsletterForm.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+
+// Sort posts descending by date
+const sortedPosts = allPosts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+// Latest 3 news and latest 3 tutorials
+const latestNews = sortedPosts.filter((p) => p.data.category === 'news').slice(0, 3);
+const latestTutorials = sortedPosts.filter((p) => p.data.category === 'tutorial').slice(0, 3);
+---
+
+<BaseLayout>
+  <!-- Hero Section -->
+  <section class="py-12 sm:py-20 text-center max-w-3xl mx-auto">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark mb-6">
+      <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+      <span>The independent chronicle & practical guides for Claude</span>
+    </div>
+
+    <h1 class="text-4xl sm:text-6xl font-serif font-black tracking-tight text-fg-light dark:text-fg-dark leading-tight">
+      Everything Claude. <br />
+      <span class="text-accent dark:text-accent-dark">Clear, practical, daily.</span>
+    </h1>
+
+    <p class="mt-6 text-lg sm:text-xl text-fg-mutedLight dark:text-fg-mutedDark max-w-2xl mx-auto leading-relaxed">
+      Curated actuality, prompt engineering methodologies, and step-by-step developer tutorials dedicated exclusively to Anthropic's AI assistant.
+    </p>
+
+    <div class="mt-8 flex flex-wrap justify-center gap-4">
+      <a
+        href="/news"
+        class="px-6 py-3 rounded-lg bg-fg-light dark:bg-fg-dark text-bg-light dark:text-bg-dark font-medium hover:opacity-90 transition-opacity"
+      >
+        Read Latest News
+      </a>
+      <a
+        href="/tutorials"
+        class="px-6 py-3 rounded-lg border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark font-medium hover:border-accent dark:hover:border-accent-dark transition-colors"
+      >
+        Explore Tutorials
+      </a>
+    </div>
+  </section>
+
+  <!-- Latest News Section -->
+  <section class="py-12 border-t border-border-light dark:border-border-dark">
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-fg-light dark:text-fg-dark">
+          Latest News & Updates
+        </h2>
+        <p class="text-sm text-fg-mutedLight dark:text-fg-mutedDark mt-1">
+          Model releases, API enhancements, and Anthropic developments.
+        </p>
+      </div>
+      <a
+        href="/news"
+        class="text-sm font-semibold text-accent dark:text-accent-dark hover:underline inline-flex items-center gap-1"
+      >
+        View all news →
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {latestNews.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
+  </section>
+
+  <!-- Latest Tutorials Section -->
+  <section class="py-12 border-t border-border-light dark:border-border-dark">
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-fg-light dark:text-fg-dark">
+          Practical Tutorials
+        </h2>
+        <p class="text-sm text-fg-mutedLight dark:text-fg-mutedDark mt-1">
+          Hands-on implementation guides, Claude Code setups, and API architectures.
+        </p>
+      </div>
+      <a
+        href="/tutorials"
+        class="text-sm font-semibold text-accent dark:text-accent-dark hover:underline inline-flex items-center gap-1"
+      >
+        View all tutorials →
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {latestTutorials.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="py-12 border-t border-border-light dark:border-border-dark">
+    <NewsletterForm />
+  </section>
+</BaseLayout>

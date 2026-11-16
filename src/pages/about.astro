@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Wordmark from '../components/Wordmark.astro';
+---
+
+<BaseLayout
+  title="About Claudaily"
+  description="Learn about Claudaily, our mission, independent editorial policy, and dedication to covering Anthropic's Claude AI assistant."
+>
+  <div class="max-w-2xl mx-auto py-8">
+    <header class="mb-10 pb-6 border-b border-border-light dark:border-border-dark">
+      <Wordmark size="lg" />
+      <h1 class="text-3xl sm:text-4xl font-serif font-black text-fg-light dark:text-fg-dark mt-4">
+        About Claudaily
+      </h1>
+      <p class="mt-2 text-lg text-fg-mutedLight dark:text-fg-mutedDark">
+        The independent chronicle and practical knowledge base for Claude.
+      </p>
+    </header>
+
+    <!-- Prominent Disclaimer -->
+    <div class="p-5 rounded-xl border border-amber-300/60 dark:border-amber-700/60 bg-amber-50/60 dark:bg-amber-950/20 mb-8">
+      <div class="flex items-start gap-3">
+        <svg class="w-6 h-6 text-amber-700 dark:text-amber-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        <div>
+          <h2 class="text-sm font-bold text-amber-900 dark:text-amber-200">
+            Independent Publication & Disclaimer
+          </h2>
+          <p class="mt-1 text-sm text-amber-800/90 dark:text-amber-300/80 leading-relaxed">
+            <strong>Claudaily is an entirely independent English-language blog</strong>. It is not affiliated with, maintained by, authorized by, sponsored by, or endorsed by <strong>Anthropic, PBC</strong>. All opinions, guides, and tutorials expressed on this site are solely those of the authors. "Claude" is a trademark of Anthropic, PBC.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose dark:prose-invert">
+      <h2>Our Mission</h2>
+      <p>
+        As foundation models advance at unprecedented speed, keeping up with meaningful technical improvements can be overwhelming. Claudaily exists to cut through the marketing noise and provide software engineers, researchers, and builders with:
+      </p>
+
+      <ul>
+        <li><strong>Actuality & News</strong>: Direct, factual summaries of new model iterations (Sonnet, Opus, Haiku), API changes, benchmark analysis, and official announcements.</li>
+        <li><strong>Tested Tutorials</strong>: Practical how-to guides focusing on real-world implementation—from Claude Code in the CLI to tool use, prompt caching, and multi-agent coordination.</li>
+      </ul>
+
+      <h2>Editorial Standards</h2>
+      <p>
+        Every article published on Claudaily adheres to strict content principles:
+      </p>
+      <ol>
+        <li><strong>Verified Sources</strong>: News articles link directly to official documentation, papers, or Anthropic blog posts with visible publication dates.</li>
+        <li><strong>Reproducible Code</strong>: Tutorials contain tested, reproducible code snippets with clear prerequisites, difficulty ratings, and troubleshooting steps.</li>
+        <li><strong>Zero Clutter</strong>: We believe in lightning-fast static pages, high-contrast typography, and accessible design without obstructive advertisements or aggressive trackers.</li>
+      </ol>
+
+      <h2>Tech Stack</h2>
+      <p>
+        Claudaily is built with modern static-web principles:
+      </p>
+      <ul>
+        <li><strong>Framework</strong>: Astro 5 (zero-JS by default)</li>
+        <li><strong>Styling</strong>: Tailwind CSS with accessible warm-palette typography</li>
+        <li><strong>Search</strong>: Client-side search powered by Pagefind</li>
+        <li><strong>Hosting</strong>: Vercel (Edge CDN)</li>
+      </ul>
+    </div>
+  </div>
+</BaseLayout>

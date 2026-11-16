@@ -1,0 +1,43 @@
+---
+import Wordmark from './Wordmark.astro';
+import ThemeToggle from './ThemeToggle.astro';
+
+const navLinks = [
+  { href: '/news', label: 'News' },
+  { href: '/tutorials', label: 'Tutorials' },
+  { href: '/about', label: 'About' },
+  { href: '/search', label: 'Search' },
+];
+
+const pathname = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-40 w-full border-b border-border-light dark:border-border-dark bg-bg-light/90 dark:bg-bg-dark/90 backdrop-blur transition-colors">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-6">
+      <Wordmark size="md" />
+    </div>
+
+    <nav aria-label="Main Navigation" class="flex items-center gap-1 sm:gap-2">
+      {navLinks.map((link) => {
+        const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
+        return (
+          <a
+            href={link.href}
+            class={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+              isActive
+                ? 'text-accent-light dark:text-accent-dark bg-surface-light dark:bg-surface-dark font-semibold'
+                : 'text-fg-mutedLight dark:text-fg-mutedDark hover:text-fg-light dark:hover:text-fg-dark hover:bg-surface-light dark:hover:bg-surface-dark'
+            }`}
+          >
+            {link.label}
+          </a>
+        );
+      })}
+
+      <div class="ml-2 pl-2 border-l border-border-light dark:border-border-dark flex items-center">
+        <ThemeToggle />
+      </div>
+    </nav>
+  </div>
+</header>

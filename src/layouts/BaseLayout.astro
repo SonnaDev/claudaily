@@ -1,0 +1,163 @@
+---
+import '@fontsource/fraunces/400.css';
+import '@fontsource/fraunces/700.css';
+import '@fontsource/fraunces/900.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/500.css';
+import '../styles/global.css';
+
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  articleDate?: string;
+  articleUpdated?: string;
+  canonicalURL?: URL | string;
+  type?: 'website' | 'article';
+}
+
+const siteTitle = 'Claudaily | The Independent Claude AI Chronicle & Guides';
+const siteDescription = "An independent English-language blog dedicated exclusively to Claude (Anthropic's AI assistant). News, model updates, practical tutorials, and prompting guides.";
+
+const {
+  title,
+  description = siteDescription,
+  image = '/favicon.svg',
+  articleDate,
+  articleUpdated,
+  canonicalURL = Astro.url,
+  type = 'website',
+} = Astro.props;
+
+const pageTitle = title ? `${title} | Claudaily` : siteTitle;
+const fullCanonicalURL = new URL(canonicalURL, Astro.site || 'https://claudaily.vercel.app').href;
+const socialImageURL = new URL(image, Astro.site || 'https://claudaily.vercel.app').href;
+
+// JSON-LD structured data
+const jsonLd = type === 'article'
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: title,
+      description: description,
+      datePublished: articleDate,
+      dateModified: articleUpdated || articleDate,
+      url: fullCanonicalURL,
+      publisher: {
+        '@type': 'Organization',
+        name: 'Claudaily',
+        logo: {
+          '@type': 'ImageObject',
+          url: new URL('/favicon.svg', Astro.site || 'https://claudaily.vercel.app').href,
+        },
+      },
+    }
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Claudaily',
+      url: fullCanonicalURL,
+      description: siteDescription,
+    };
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={fullCanonicalURL} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={fullCanonicalURL} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImageURL} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={fullCanonicalURL} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageURL} />
+
+    <!-- RSS feed auto-discovery -->
+    <link rel="alternate" type="application/rss+xml" title="Claudaily RSS Feed" href="/rss.xml" />
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <!-- Anti-flicker theme script -->
+    <script is:inline>
+      (function () {
+        const storedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (storedTheme === 'dark' || (!storedTheme && systemPrefersDark)) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col bg-bg-light dark:bg-bg-dark text-fg-light dark:text-fg-dark selection:bg-accent selection:text-white transition-colors">
+    <Header />
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-10">
+      <slot />
+    </main>
+    <Footer />
+
+    <!-- Global Code Copy Button Script -->
+    <script>
+      function setupCopyButtons() {
+        const preElements = document.querySelectorAll('pre');
+        preElements.forEach((pre) => {
+          if (pre.parentNode && (pre.parentNode as HTMLElement).classList.contains('code-block-wrapper')) {
+            return;
+          }
+          const wrapper = document.createElement('div');
+          wrapper.className = 'code-block-wrapper relative';
+          pre.parentNode?.insertBefore(wrapper, pre);
+          wrapper.appendChild(pre);
+
+          const copyBtn = document.createElement('button');
+          copyBtn.className = 'copy-code-btn';
+          copyBtn.type = 'button';
+          copyBtn.setAttribute('aria-label', 'Copy code to clipboard');
+          copyBtn.innerText = 'Copy';
+
+          copyBtn.onclick = async () => {
+            const code = pre.querySelector('code')?.innerText || pre.innerText;
+            try {
+              await navigator.clipboard.writeText(code);
+              copyBtn.innerText = 'Copied!';
+              setTimeout(() => {
+                copyBtn.innerText = 'Copy';
+              }, 2000);
+            } catch (err) {
+              copyBtn.innerText = 'Error';
+            }
+          };
+
+          wrapper.appendChild(copyBtn);
+        });
+      }
+
+      setupCopyButtons();
+      document.addEventListener('astro:after-swap', setupCopyButtons);
+    </script>
+  </body>
+</html>

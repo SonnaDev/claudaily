@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import Pagination from '../../components/Pagination.astro';
+import { getCollection } from 'astro:content';
+
+const POSTS_PER_PAGE = 6;
+const allTutorials = await getCollection('blog', ({ data }) => !data.draft && data.category === 'tutorial');
+const sortedTutorials = allTutorials.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const totalPages = Math.ceil(sortedTutorials.length / POSTS_PER_PAGE) || 1;
+const paginatedTutorials = sortedTutorials.slice(0, POSTS_PER_PAGE);
+---
+
+<BaseLayout
+  title="Claude Tutorials & How-To Guides"
+  description="Practical, step-by-step guides covering prompt engineering, Claude Code, tool use, and API optimizations."
+>
+  <div class="mb-10 pb-6 border-b border-border-light dark:border-border-dark">
+    <div class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-semibold uppercase tracking-wider bg-accent/10 text-accent dark:text-accent-dark mb-3">
+      Category
+    </div>
+    <h1 class="text-3xl sm:text-4xl font-serif font-black text-fg-light dark:text-fg-dark">
+      Claude Tutorials & Practical Guides
+    </h1>
+    <p class="mt-2 text-fg-mutedLight dark:text-fg-mutedDark text-base sm:text-lg">
+      Tested walkthroughs, code patterns, and implementation strategies for building with Claude.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {paginatedTutorials.map((post) => (
+      <PostCard post={post} />
+    ))}
+  </div>
+
+  <Pagination currentPage={1} totalPages={totalPages} baseUrl="/tutorials" />
+</BaseLayout>
