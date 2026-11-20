@@ -67,11 +67,19 @@ const latestTutorials = sortedPosts.filter((p) => p.data.category === 'tutorial'
       </a>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {latestNews.map((post) => (
-        <PostCard post={post} />
-      ))}
-    </div>
+    {latestNews.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {latestNews.map((post) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    ) : (
+      <div class="p-8 rounded-xl border border-dashed border-border-light dark:border-border-dark text-center">
+        <p class="text-sm text-fg-mutedLight dark:text-fg-mutedDark">
+          New model and feature announcements are currently being curated. Check back soon!
+        </p>
+      </div>
+    )}
   </section>
 
   <!-- Latest Tutorials Section -->
@@ -93,11 +101,19 @@ const latestTutorials = sortedPosts.filter((p) => p.data.category === 'tutorial'
       </a>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {latestTutorials.map((post) => (
-        <PostCard post={post} />
-      ))}
-    </div>
+    {latestTutorials.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {latestTutorials.map((post) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    ) : (
+      <div class="p-8 rounded-xl border border-dashed border-border-light dark:border-border-dark text-center">
+        <p class="text-sm text-fg-mutedLight dark:text-fg-mutedDark">
+          Tutorial guides are being verified and updated for the latest model capabilities.
+        </p>
+      </div>
+    )}
   </section>
 
   <!-- Newsletter Section -->

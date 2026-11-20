@@ -37,8 +37,8 @@ const {
 } = Astro.props;
 
 const pageTitle = title ? `${title} | Claudaily` : siteTitle;
-const fullCanonicalURL = new URL(canonicalURL, Astro.site || 'https://claudaily.vercel.app').href;
-const socialImageURL = new URL(image, Astro.site || 'https://claudaily.vercel.app').href;
+const fullCanonicalURL = new URL(canonicalURL, Astro.site || 'https://www.claudaily.com').href;
+const socialImageURL = new URL(image, Astro.site || 'https://www.claudaily.com').href;
 
 // JSON-LD structured data
 const jsonLd = type === 'article'
@@ -55,7 +55,7 @@ const jsonLd = type === 'article'
         name: 'Claudaily',
         logo: {
           '@type': 'ImageObject',
-          url: new URL('/favicon.svg', Astro.site || 'https://claudaily.vercel.app').href,
+          url: new URL('/favicon.svg', Astro.site || 'https://www.claudaily.com').href,
         },
       },
     }

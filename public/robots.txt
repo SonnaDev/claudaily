@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://claudaily.vercel.app/sitemap-index.xml
+Sitemap: https://www.claudaily.com/sitemap-index.xml

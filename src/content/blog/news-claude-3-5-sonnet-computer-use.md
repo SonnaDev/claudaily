@@ -1,8 +1,9 @@
 ---
 title: "Claude 3.5 Sonnet Upgraded with Breakthrough Computer Use API"
 description: "Anthropic introduces revolutionary Computer Use capabilities alongside an upgraded Claude 3.5 Sonnet, allowing the model to interact directly with desktop software interfaces."
-date: 2026-10-22
-updated: 2026-10-24
+date: 2024-10-22
+updated: 2024-10-24
+draft: true
 category: "news"
 tags: ["anthropic", "sonnet", "computer-use", "api", "models"]
 sources:

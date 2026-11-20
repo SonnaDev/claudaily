@@ -2,6 +2,7 @@
 title: "Getting Started with Claude Code in Your Terminal"
 description: "A complete step-by-step beginner guide to installing, configuring, and leveraging Anthropic's agentic command-line developer assistant."
 date: 2026-11-01
+draft: true
 category: "tutorial"
 tags: ["claude-code", "cli", "developer-tools", "terminal", "workflows"]
 difficulty: "Beginner"

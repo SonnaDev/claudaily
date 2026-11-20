@@ -2,19 +2,31 @@
 interface Props {
   title?: string;
   description?: string;
+  buttondownUsername?: string; // Optional: set to your Buttondown username, e.g. "claudaily"
 }
 
 const {
   title = "Stay ahead with Claude",
   description = "Get our weekly breakdown of new Claude capabilities, prompt engineering techniques, and API tutorials directly to your inbox. No spam, ever.",
+  buttondownUsername = "", // When left empty, shows an honest "coming soon" badge instead of a fake form
 } = Astro.props;
+
+const isConfigured = Boolean(buttondownUsername);
 ---
 
 <div class="rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark p-6 sm:p-8 relative overflow-hidden transition-colors">
   <div class="max-w-xl">
-    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-accent/10 text-accent dark:text-accent-dark mb-3">
-      Claudaily Dispatch
-    </span>
+    <div class="flex items-center gap-2 mb-3">
+      <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-accent/10 text-accent dark:text-accent-dark">
+        Claudaily Dispatch
+      </span>
+      {!isConfigured && (
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-surface-hoverLight dark:bg-surface-hoverDark text-fg-mutedLight dark:text-fg-mutedDark border border-border-light dark:border-border-dark">
+          Coming Soon
+        </span>
+      )}
+    </div>
+
     <h3 class="text-xl sm:text-2xl font-serif font-bold text-fg-light dark:text-fg-dark">
       {title}
     </h3>
@@ -22,26 +34,41 @@ const {
       {description}
     </p>
 
-    <!-- Placeholder newsletter form -->
-    <form id="newsletter-form" class="mt-5 flex flex-col sm:flex-row gap-2.5" onsubmit="event.preventDefault(); document.getElementById('newsletter-msg').classList.remove('hidden');">
-      <label for="newsletter-email" class="sr-only">Email address</label>
-      <input
-        type="email"
-        id="newsletter-email"
-        required
-        placeholder="you@domain.com"
-        class="flex-1 px-4 py-2.5 text-sm rounded-lg border border-border-light dark:border-border-dark bg-bg-light dark:bg-bg-dark text-fg-light dark:text-fg-dark placeholder:text-fg-mutedLight/60 dark:placeholder:text-fg-mutedDark/60 focus:outline-none focus:ring-2 focus:ring-accent"
-      />
-      <button
-        type="submit"
-        class="px-5 py-2.5 text-sm font-medium rounded-lg bg-accent text-white hover:opacity-95 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
+    {isConfigured ? (
+      <!-- Real Buttondown Newsletter Integration -->
+      <form
+        action={`https://buttondown.com/api/emails/embed-subscribe/${buttondownUsername}`}
+        method="post"
+        target="popupwindow"
+        onsubmit={`window.open('https://buttondown.com/${buttondownUsername}', 'popupwindow')`}
+        class="mt-5 flex flex-col sm:flex-row gap-2.5"
       >
-        Subscribe
-      </button>
-    </form>
-
-    <p id="newsletter-msg" class="hidden mt-3 text-xs text-green-700 dark:text-green-400 font-medium">
-      ✓ Thank you! You're now on the early notification list. (Form placeholder)
-    </p>
+        <label for="newsletter-email" class="sr-only">Email address</label>
+        <input
+          type="email"
+          name="email"
+          id="newsletter-email"
+          required
+          placeholder="you@domain.com"
+          class="flex-1 px-4 py-2.5 text-sm rounded-lg border border-border-light dark:border-border-dark bg-bg-light dark:bg-bg-dark text-fg-light dark:text-fg-dark placeholder:text-fg-mutedLight/60 dark:placeholder:text-fg-mutedDark/60 focus:outline-none focus:ring-2 focus:ring-accent"
+        />
+        <button
+          type="submit"
+          class="px-5 py-2.5 text-sm font-medium rounded-lg bg-accent text-white hover:opacity-95 transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
+        >
+          Subscribe
+        </button>
+      </form>
+    ) : (
+      <!-- Honest Coming Soon status; never fakes a submission -->
+      <div class="mt-5 flex items-center gap-3 p-3.5 rounded-lg border border-border-light dark:border-border-dark bg-bg-light/70 dark:bg-bg-dark/70 text-xs text-fg-mutedLight dark:text-fg-mutedDark">
+        <svg class="w-4 h-4 text-accent shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>
+          The weekly email newsletter will launch soon. In the meantime, you can subscribe to our verified updates via our <a href="/rss.xml" class="text-accent hover:underline font-medium">RSS feed</a>.
+        </span>
+      </div>
+    )}
   </div>
 </div>

@@ -28,11 +28,19 @@ const paginatedTutorials = sortedTutorials.slice(0, POSTS_PER_PAGE);
     </p>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    {paginatedTutorials.map((post) => (
-      <PostCard post={post} />
-    ))}
-  </div>
+  {paginatedTutorials.length > 0 ? (
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {paginatedTutorials.map((post) => (
+        <PostCard post={post} />
+      ))}
+    </div>
+  ) : (
+    <div class="p-12 rounded-xl border border-dashed border-border-light dark:border-border-dark text-center my-8">
+      <p class="text-base text-fg-mutedLight dark:text-fg-mutedDark">
+        Tutorial guides are currently being updated and verified. Please check back shortly.
+      </p>
+    </div>
+  )}
 
   <Pagination currentPage={1} totalPages={totalPages} baseUrl="/tutorials" />
 </BaseLayout>

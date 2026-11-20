@@ -2,6 +2,7 @@
 title: "Building a Structured Output Agent with Claude Tool Use and TypeScript"
 description: "Learn how to use Anthropic's tool calling (function calling) capabilities in TypeScript to enforce strict JSON schemas and validate agent outputs."
 date: 2026-10-15
+draft: true
 category: "tutorial"
 tags: ["typescript", "api", "tool-use", "structured-data", "agents"]
 difficulty: "Intermediate"

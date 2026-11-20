@@ -9,7 +9,7 @@ export async function GET(context: APIContext) {
   return rss({
     title: 'Claudaily | The Independent Claude AI Chronicle & Guides',
     description: "An independent English-language blog dedicated exclusively to Claude (Anthropic's AI assistant).",
-    site: context.site || 'https://claudaily.vercel.app',
+    site: context.site || 'https://www.claudaily.com',
     items: sorted.map((post) => ({
       title: post.data.title,
       pubDate: post.data.date,

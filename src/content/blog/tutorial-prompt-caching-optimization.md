@@ -2,6 +2,7 @@
 title: "Optimizing Token Costs with Prompt Caching and Context Windows"
 description: "A production engineering guide to designing breakpoint architectures that leverage Claude's 90% prompt caching discounts while minimizing cache churn."
 date: 2026-10-05
+draft: true
 category: "tutorial"
 tags: ["prompt-caching", "architecture", "performance", "cost-reduction", "advanced"]
 difficulty: "Advanced"

@@ -1,7 +1,8 @@
 ---
 title: "Anthropic Releases Prompt Caching to Slash API Latency and Costs by up to 90%"
 description: "Prompt Caching allows developers to cache large context windows across Claude requests, dramatically accelerating response times and lowering input token pricing."
-date: 2026-08-14
+date: 2024-08-14
+draft: true
 category: "news"
 tags: ["anthropic", "api", "prompt-caching", "performance", "cost-optimization"]
 sources:

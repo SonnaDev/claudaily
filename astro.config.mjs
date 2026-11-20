@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://claudaily.vercel.app',
+  site: 'https://www.claudaily.com',
   output: 'static',
   integrations: [
     tailwind({

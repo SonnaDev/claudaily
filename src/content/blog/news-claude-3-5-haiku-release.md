@@ -1,7 +1,8 @@
 ---
 title: "Claude 3.5 Haiku Arrives: Blazing Speed and Near-Sonnet Intelligence"
 description: "Anthropic rolls out Claude 3.5 Haiku, pairing sub-second response times with benchmark scores that rival the previous generation flagship model Claude 3 Opus."
-date: 2026-11-04
+date: 2024-11-04
+draft: true
 category: "news"
 tags: ["anthropic", "haiku", "models", "latency", "benchmarks"]
 sources:
