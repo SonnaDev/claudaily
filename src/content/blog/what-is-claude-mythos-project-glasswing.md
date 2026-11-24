@@ -45,7 +45,7 @@ Mythos Preview is a general-purpose model, and Anthropic called it its most capa
 
 On June 9, 2026, Anthropic released two models built on the same underlying system: **Claude Fable 5** for general use, and **Claude Mythos 5** for restricted access through Glasswing. Fable carries additional safeguards aimed at cybersecurity and biology, which is what allowed Anthropic to offer it widely.
 
-Shortly after launch, both models were switched off for several weeks because of US export controls.
+Shortly after launch, both models were switched off for several weeks because of US export controls. Our [timeline of Fable 5 and Mythos 5](/news/claude-fable-5-mythos-5-timeline) covers that episode in detail.
 
 ---
 
@@ -58,7 +58,7 @@ Shortly after launch, both models were switched off for several weeks because of
 | **Safeguards** | Lifted in some areas | Extra biology and cyber safeguards | Safeguards similar to Fable 5.1 |
 | **Released** | Nov 9, 2026 | Nov 9, 2026 | Sep 22, 2026 |
 
-Mythos 5.2 and Fable 5.2 share the same underlying model. The difference is mainly the safeguards and who is allowed to use it. Anthropic also noted that Opus 5.5 is comparable to Mythos 5.1 in biology and cybersecurity, so it deploys Opus 5.5 with safeguards similar to those on Fable 5.1.
+Mythos 5.2 and Fable 5.2 share the same underlying model. The difference is mainly the safeguards and who is allowed to use it. Anthropic also noted that Opus 5.5 is comparable to Mythos 5.1 in biology and cybersecurity, so it deploys Opus 5.5 with safeguards similar to those on Fable 5.1. For help choosing between the public models, read [Claude Models in 2026](/news/claude-models-in-2026-fable-opus-sonnet-haiku).
 
 ---
 
