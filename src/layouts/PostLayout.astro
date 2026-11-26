@@ -141,8 +141,8 @@ const difficultyBadgeColors = {
       <slot />
     </div>
 
-    <!-- Official Sources (News posts) -->
-    {category === 'news' && sources && sources.length > 0 && (
+    <!-- Official Sources & Reference Links -->
+    {sources && sources.length > 0 && (
       <section class="mt-12 pt-6 border-t border-border-light dark:border-border-dark">
         <h2 class="text-xs font-semibold tracking-wider uppercase text-fg-light dark:text-fg-dark mb-3 flex items-center gap-2">
           <svg class="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
